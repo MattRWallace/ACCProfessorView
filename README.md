@@ -1,22 +1,25 @@
-# ASU ProfessorView
+# TXST ProfessorView
+To create this extension, I started with the wonderful work done by Joshua Manigault [here](https://github.com/joshuamanigault/ASUProfessorView) to provide this functionality for ASU students.
 
-**See Rate My Professor reviews directly in your ASU class search!**  
+**See Rate My Professor reviews directly in your Texas State class search!**  
 
-This Chrome extension enhances the Arizona State University class catalog by showing professor ratings and reviews from Rate My Professor right where you need them.
+This Chrome extension enhances the Texas State University class catalog by showing professor ratings and reviews from Rate My Professor right where you need them.
 
 ---
 
 ## Features
-- Quickly view professor ratings and reviews while browsing ASU course listings.  
+- Quickly view professor ratings and reviews while browsing TXST course listings.  
 - No need to visit Rate My Professor separately.  
-- Works seamlessly on ASU’s catalog search pages.
+- Works seamlessly on Texas State’s catalog search pages.
 
 ---
 
 ## Installation
 
 ### For Users (Chrome Web Store)
-Link to Extension: [Chrome Web Store](https://chromewebstore.google.com/detail/asu-profview/kniajfafepienoohdheheofabfclpgnl)
+TODO: When published to chrome web store, add link here.
+
+[//]: # (Link to Extension: [Chrome Web Store](https://chromewebstore.google.com/detail/asu-profview/kniajfafepienoohdheheofabfclpgnl))
 
 ### For Developers/Contributors
 1. **Clone the repository** or **Download the extension files** from this repository.
@@ -34,7 +37,7 @@ npm run build
 ---
 
 ## Notes
-- Works on [ASU Catalog](https://catalog.apps.asu.edu/) pages only.  
+- Works on [TXST Catalog](https://reg-prod.ec.txstate.edu/StudentRegistrationSsb/ssb/courseSearch/courseSearch) pages only.  
 - Make sure you refresh the catalog page after installing the extension.  
 - Data comes from Rate My Professor.
 
