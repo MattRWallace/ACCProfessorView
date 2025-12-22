@@ -13,6 +13,7 @@ const KEY_TO_ID: Record<keyof Options, string> = {
 };
 
 function setStoreLink() {
+    // TODO: Need to update this link
     const storeUrl =
         "https://chromewebstore.google.com/detail/asu-professorview/kniajfafepienoohdheheofabfclpgnl";
 

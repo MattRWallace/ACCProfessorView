@@ -2,18 +2,17 @@ import styles from './content.styles.css?inline'
 import { createProfessorCardTemplate, createNotFoundCardTemplate, createCompactCardTemplate, createCompactNotFoundCardTemplate } from "./templates.js";
 
 function findProfessors() {
-    const instructorDivs = document.querySelectorAll('div.instructor.class-results-cell');
+    const instructorTds = document.querySelectorAll('td[data-property="instructor"]')
     const names = [];
 
-    instructorDivs.forEach((div) => {
-        const link = div.querySelector('a');
+    instructorTds.forEach((td) => {
+        const link = td.querySelector('a');
         if (!link) return;
 
         // Remove hyphens and extra spaces from the name
-        const rawName = link.innerText.trim();
-        const normalizedName = rawName.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+        const normalizedName = normalizeName(link.innerText.trim());
 
-        if (!div.querySelector('.rmp-card') && !names.includes(normalizedName)) {
+        if (!td.querySelector('.rmp-card') && !names.includes(normalizedName)) {
             names.push(normalizedName);
         }
     });
@@ -69,21 +68,21 @@ async function processProfessorSequentially(names)  {
 
 function injectProfessorCard(name, data) {
     // Find all professor links with this name
-    const instructorDivs = document.querySelectorAll('div.instructor.class-results-cell');
+    const instructorTds = document.querySelectorAll('td[data-property="instructor"]')
     
-    instructorDivs.forEach((div) => {
-        const link = div.querySelector('a');
+    instructorTds.forEach((td) => {
+        const link = td.querySelector('a');
         if (!link) return;
         
-        const rawLinkName = link.innerText.trim();
-        const normalizedLinkName = rawLinkName.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+        // Remove hyphens and extra spaces from the name
+        const normalizedLinkName = normalizeName(link.innerText.trim());
         
         if (normalizedLinkName !== name) return;
-        if (div.querySelector('.rmp-card')) return;
+        if (td.querySelector('.rmp-card')) return;
         
         chrome.storage.sync.get({ compact_cards: false }, (result) => {
             // Re-check in callback to avoid race conditions with repeated observers/responses
-            if (div.querySelector('.rmp-card')) return;
+            if (td.querySelector('.rmp-card')) return;
 
             const useCompact = Boolean(result.compact_cards);
             let card;
@@ -102,20 +101,20 @@ function injectProfessorCard(name, data) {
 }
 
 function injectNotFoundCard(name) {
-    const instructorDivs = document.querySelectorAll('div.instructor.class-results-cell');
+    const instructorTds = document.querySelectorAll('td[data-property="instructor"]')
     
-    instructorDivs.forEach((div) => {
-        const link = div.querySelector('a');
+    instructorTds.forEach((td) => {
+        const link = td.querySelector('a');
         if (!link) return;
 
-        const rawLinkName = link.innerText.trim();
-        const normalizedLinkName = rawLinkName.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+        // Remove hyphens and extra spaces from the name
+        const normalizedLinkName = normalizeName(link.innerText.trim());
 
         if (normalizedLinkName !== name) return;
-        if (div.querySelector('.rmp-card')) return;
+        if (td.querySelector('.rmp-card')) return;
 
         chrome.storage.sync.get({ compact_cards: false }, (result) => {
-            if (div.querySelector('.rmp-card')) return;
+            if (td.querySelector('.rmp-card')) return;
 
             const useCompact = Boolean(result.compact_cards);
             let card;
@@ -183,6 +182,22 @@ function debounce(func, wait) {
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
     };
+}
+
+function normalizeName(name) {
+    const rawLinkName = name;
+    const reorderedName = reorderName(name)
+    const normalizedLinkName = reorderedName.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+    return normalizedLinkName
+}
+
+function reorderName(name) {
+    const parts = name.split(',')
+    if (parts.length == 2) {
+        const firstPart = parts[0]
+        const secondPart = parts[1]
+        return `${secondPart.trim()} ${firstPart.trim()}`
+    }
 }
 
 // Run after page load

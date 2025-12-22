@@ -10,43 +10,42 @@ const professorTimestamps = new Map<string, number>();
 const CACHE_DURATION = 5 * 60 * 1000; // 5 mins * 60 secs * 1000 ms
 
 const ASU_CAMPUSES = [
-  "Arizona State University",
-  "Arizona State University - Polytechnic Campus",
-  "Arizona State University - West Campus"
+  "Texas State University",
+  "Texas State University Round Rock Campus",
 ]
 
-const ASU_PROFESSOR_NAME_REPLACEMENTS: { [key: string]: string} = {
-  "Steven Baer": "Steve Baer",
-  //"Shyla Gonzalez Dogan": "Shyla Dogan",
-  "Carla van de Sande": "Carla Van De Sande",
-  //"Christopher Felix Gozo": "Christopher Gozo",
-  "Josh Klein": "Joshua Klein",
-  //"Fabio Suzart de Albuquerque": "Fabio Albuquerque",
-  "Zahra Sadri Moshkenani": "Zahra Sadri-Moshekenani"
-}
+// const ASU_PROFESSOR_NAME_REPLACEMENTS: { [key: string]: string} = {
+//   "Steven Baer": "Steve Baer",
+//   //"Shyla Gonzalez Dogan": "Shyla Dogan",
+//   "Carla van de Sande": "Carla Van De Sande",
+//   //"Christopher Felix Gozo": "Christopher Gozo",
+//   "Josh Klein": "Joshua Klein",
+//   //"Fabio Suzart de Albuquerque": "Fabio Albuquerque",
+//   "Zahra Sadri Moshkenani": "Zahra Sadri-Moshekenani"
+// }
 
-function applyNameReplacements(professorName: string): string {
-  // Direct replacement
-  if (ASU_PROFESSOR_NAME_REPLACEMENTS[professorName]) {
-    console.debug(`Name replacement: "${professorName}" → "${ASU_PROFESSOR_NAME_REPLACEMENTS[professorName]}"`);
-    return ASU_PROFESSOR_NAME_REPLACEMENTS[professorName];
-  }
+// function applyNameReplacements(professorName: string): string {
+//   // Direct replacement
+//   if (ASU_PROFESSOR_NAME_REPLACEMENTS[professorName]) {
+//     console.debug(`Name replacement: "${professorName}" → "${ASU_PROFESSOR_NAME_REPLACEMENTS[professorName]}"`);
+//     return ASU_PROFESSOR_NAME_REPLACEMENTS[professorName];
+//   }
   
-  // Partial replacement (for first names)
-  let modifiedName = professorName;
-  for (const [original, replacement] of Object.entries(ASU_PROFESSOR_NAME_REPLACEMENTS)) {
-    if (professorName.includes(original)) {
-      modifiedName = professorName.replace(original, replacement);
-      console.debug(`Partial name replacement: "${professorName}" → "${modifiedName}"`);
-      break;
-    }
-  }
+//   // Partial replacement (for first names)
+//   let modifiedName = professorName;
+//   for (const [original, replacement] of Object.entries(ASU_PROFESSOR_NAME_REPLACEMENTS)) {
+//     if (professorName.includes(original)) {
+//       modifiedName = professorName.replace(original, replacement);
+//       console.debug(`Partial name replacement: "${professorName}" → "${modifiedName}"`);
+//       break;
+//     }
+//   }
   
-  return modifiedName;
-}
+//   return modifiedName;
+// }
 
 
-async function searchAsuCampuses(professorName: string) {
+async function searchTxstCampuses(professorName: string) {
   const errors: string[] = [];
   
   // Try original name first
@@ -54,10 +53,10 @@ async function searchAsuCampuses(professorName: string) {
   const nameParts = professorName.split(' ');
   
   // Add replacement name if it exists
-  const replacementName = applyNameReplacements(professorName);
-  if (replacementName !== professorName) {
-    namesToTry.push(replacementName);
-  }
+  // const replacementName = applyNameReplacements(professorName);
+  // if (replacementName !== professorName) {
+  //   namesToTry.push(replacementName);
+  // }
 
   // Add variations: first name only, last name only
   if (nameParts.length >= 2) {
@@ -102,7 +101,7 @@ async function searchAsuCampuses(professorName: string) {
   }
   
   // If we get here, no campus had a valid match for any name variation
-  throw new Error(`Professor "${professorName}" not found at any ASU campus with any name variation. Tried: ${errors.join(', ')}`);
+  throw new Error(`Professor "${professorName}" not found at any TXST campus with any name variation. Tried: ${errors.join(', ')}`);
 }
 
 function validateProfessor(originalName: string, professorData: any, searchedName?: string): boolean {
@@ -170,7 +169,7 @@ async function getRateMyProfessorData(professorName: string) {
 
     try {
       // Fetch data from API
-      const result = await searchAsuCampuses(professorName);
+      const result = await searchTxstCampuses(professorName);
 
       // Maintain the cache size
       maintainCacheSize();
