@@ -5,6 +5,8 @@ To create this extension, I started with the wonderful work done by Joshua Manig
 
 This Chrome extension enhances the Texas State University class catalog by showing professor ratings and reviews from Rate My Professor right where you need them.
 
+![Example screenshot](https://raw.githubusercontent.com/MattRWallace/TSXTProfessorView/refs/heads/screenshots/screenshots/Example.jpg)
+
 ---
 
 ## Features
