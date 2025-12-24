@@ -1,20 +1,25 @@
+import { get } from 'http';
 import styles from './content.styles.css?inline'
 import { createProfessorCardTemplate, createNotFoundCardTemplate, createCompactCardTemplate, createCompactNotFoundCardTemplate } from "./templates.js";
 
-const INSTRUCTOR_SELECTOR = 'td[data-property="instructor"]'
+// const INSTRUCTOR_SELECTOR = 'td[data-property="instructor"]'
+const INSTRUCTOR_SELECTOR = 'p.syn_note'
+const INSTRUCTOR_MATCH = "^Instructors:\s*(.*?)(?=\s*\(CV\)\s*$|$)"
 
 function findProfessors() {
-    const instructorTds = document.querySelectorAll(INSTRUCTOR_SELECTOR)
+    const instructorPs = document.querySelectorAll(INSTRUCTOR_SELECTOR)
     const names = [];
 
-    instructorTds.forEach((td) => {
-        const link = td.querySelector('a');
-        if (!link) return;
+    instructorPs.forEach((p) => {
+        let name  = getName(p)
 
         // Remove hyphens and extra spaces from the name
-        const normalizedName = normalizeName(link.innerText.trim());
+        const normalizedName = normalizeName(name.trim());
 
-        if (!td.querySelector('.rmp-card') && !names.includes(normalizedName)) {
+        if (normalizedName&&
+            normalizedName !== '' &&
+            !p.querySelector('.rmp-card') && 
+            !names.includes(normalizedName)) {
             names.push(normalizedName);
         }
     });
@@ -70,21 +75,18 @@ async function processProfessorSequentially(names)  {
 
 function injectProfessorCard(name, data) {
     // Find all professor links with this name
-    const instructorTds = document.querySelectorAll(INSTRUCTOR_SELECTOR)
+    const instructorPs = document.querySelectorAll(INSTRUCTOR_SELECTOR)
     
-    instructorTds.forEach((td) => {
-        const link = td.querySelector('a');
-        if (!link) return;
-        
+    instructorPs.forEach((p) => {
         // Remove hyphens and extra spaces from the name
-        const normalizedLinkName = normalizeName(link.innerText.trim());
+        const normalizedLinkName = normalizeName(getName(p).trim());
         
         if (normalizedLinkName !== name) return;
-        if (td.querySelector('.rmp-card')) return;
+        if (p.querySelector('.rmp-card')) return;
         
         chrome.storage.sync.get({ compact_cards: false }, (result) => {
             // Re-check in callback to avoid race conditions with repeated observers/responses
-            if (td.querySelector('.rmp-card')) return;
+            if (p.querySelector('.rmp-card')) return;
 
             const useCompact = Boolean(result.compact_cards);
             let card;
@@ -96,27 +98,26 @@ function injectProfessorCard(name, data) {
             }
 
             if (card) {
-                link.insertAdjacentElement('afterend', card);
+                p.insertAdjacentElement('beforeend', card);
             }
         });
     });
 }
 
 function injectNotFoundCard(name) {
-    const instructorTds = document.querySelectorAll(INSTRUCTOR_SELECTOR)
+    const instructorPs = document.querySelectorAll(INSTRUCTOR_SELECTOR)
     
-    instructorTds.forEach((td) => {
-        const link = td.querySelector('a');
-        if (!link) return;
+    instructorPs.forEach((p) => {
+        let name = getName(p)
 
         // Remove hyphens and extra spaces from the name
-        const normalizedLinkName = normalizeName(link.innerText.trim());
+        const normalizedLinkName = normalizeName(name.trim());
 
         if (normalizedLinkName !== name) return;
-        if (td.querySelector('.rmp-card')) return;
+        if (p.querySelector('.rmp-card')) return;
 
         chrome.storage.sync.get({ compact_cards: false }, (result) => {
-            if (td.querySelector('.rmp-card')) return;
+            if (p.querySelector('.rmp-card')) return;
 
             const useCompact = Boolean(result.compact_cards);
             let card;
@@ -128,7 +129,7 @@ function injectNotFoundCard(name) {
             }
 
             if (card) {
-                link.insertAdjacentElement('afterend', card);
+                p.insertAdjacentElement('beforeend', card);
             }
         });
     });
@@ -187,7 +188,9 @@ function debounce(func, wait) {
 }
 
 function normalizeName(name) {
-    const rawLinkName = name;
+    if (!name || name === '' || name === 'STAFF') {
+        return ''
+    }
     const reorderedName = reorderName(name)
     const normalizedLinkName = reorderedName.replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
     return normalizedLinkName
@@ -200,6 +203,39 @@ function reorderName(name) {
         const secondPart = parts[1]
         return `${secondPart.trim()} ${firstPart.trim()}`
     }
+    return ''
+}
+
+function getName(p) {
+    let name  = null
+    if (p && p.innerText) {
+        text = p.innerText
+    }
+    if (text) {
+        if (parseName(text)) {
+            name = parseName(text)
+        }
+    }
+    const link = p.querySelector('a');
+    if (link && link.innerText) {
+        text = link.innerText
+        if (parseName(text)) {
+            name = parseName(text)
+        }
+    }
+
+    return name
+}
+
+function parseName(raw) {
+    if (raw.startsWith("Instructors:")) {
+        raw = raw.slice("Instructors:".length)
+    }
+    if (raw.endsWith("(CV)")) {
+        raw = raw.slice(0, -"(CV)".length)
+    }
+
+    return raw.trim()
 }
 
 // Run after page load
