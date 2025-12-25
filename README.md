@@ -5,7 +5,7 @@ To create this extension, I started with the wonderful work done by Joshua Manig
 
 This Chrome extension enhances the Austin Community College class catalog by showing professor ratings and reviews from Rate My Professor right where you need them.
 
-![Example screenshot](https://raw.githubusercontent.com/MattRWallace/ACCProfessorView/refs/heads/screenshots/screenshots/Example.jpg)
+![Example screenshot](https://raw.githubusercontent.com/MattRWallace/ACCProfessorView/refs/heads/screenshots/screenshots/Example.png)
 
 ---
 
