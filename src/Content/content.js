@@ -11,10 +11,8 @@ function findProfessors() {
     const names = [];
 
     instructorPs.forEach((p) => {
-        let name  = getName(p)
-
         // Remove hyphens and extra spaces from the name
-        const normalizedName = normalizeName(name.trim());
+        const normalizedName = normalizeName(getName(p).trim());
 
         if (normalizedName&&
             normalizedName !== '' &&
@@ -108,10 +106,8 @@ function injectNotFoundCard(name) {
     const instructorPs = document.querySelectorAll(INSTRUCTOR_SELECTOR)
     
     instructorPs.forEach((p) => {
-        let name = getName(p)
-
         // Remove hyphens and extra spaces from the name
-        const normalizedLinkName = normalizeName(name.trim());
+        const normalizedLinkName = normalizeName(getName(p).trim());
 
         if (normalizedLinkName !== name) return;
         if (p.querySelector('.rmp-card')) return;
