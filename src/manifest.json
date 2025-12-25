@@ -1,10 +1,10 @@
 {
     "manifest_version": 3,
-    "name": "TXST ProfessorView",
-    "version": "1.0.0",
-    "description": "Rate My Professor Plugin for TXST Class Search. See professor ratings directly in TXST Class Search.",
+    "name": "ACC ProfessorView",
+    "version": "0.1.0",
+    "description": "Rate My Professor Plugin for ACC Class Search. See professor ratings directly in ACC Class Search.",
     "author": "matthew.r.wallace@live.com",
-    "homepage_url": "https://github.com/MattRWallace/TSXTProfessorView",
+    "homepage_url": "https://github.com/MattRWallace/ACCProfessorView",
     "permissions": [
         "storage"
     ],
@@ -14,7 +14,7 @@
     "options_page": "options.html",
     "host_permissions": [
         "https://*.ratemyprofessors.com/*",
-        "https://reg-prod.ec.txstate.edu/*"
+        "https://www6.austincc.edu/schedule/*"
     ],
     "background": {
         "service_worker": "background.js",
@@ -22,7 +22,7 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://reg-prod.ec.txstate.edu/*"],
+            "matches": ["https://www6.austincc.edu/schedule/*"],
             "js": ["content.js"],
             "run_at": "document_end"
         }

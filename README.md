@@ -1,16 +1,18 @@
-# TXST ProfessorView
+# ACC ProfessorView
 To create this extension, I started with the wonderful work done by Joshua Manigault [here](https://github.com/joshuamanigault/ASUProfessorView) to provide this functionality for ASU students.
 
-**See Rate My Professor reviews directly in your Texas State class search!**  
+**See Rate My Professor reviews directly in your Austin Community College class search!**  
 
-This Chrome extension enhances the Texas State University class catalog by showing professor ratings and reviews from Rate My Professor right where you need them.
+This Chrome extension enhances the Austin Community College class catalog by showing professor ratings and reviews from Rate My Professor right where you need them.
+
+![Example screenshot](https://raw.githubusercontent.com/MattRWallace/ACCProfessorView/refs/heads/screenshots/screenshots/Example.jpg)
 
 ---
 
 ## Features
-- Quickly view professor ratings and reviews while browsing TXST course listings.  
+- Quickly view professor ratings and reviews while browsing ACC course listings.  
 - No need to visit Rate My Professor separately.  
-- Works seamlessly on Texas State’s catalog search pages.
+- Works seamlessly on Austin Community Colege's catalog search pages.
 
 ---
 
@@ -37,7 +39,7 @@ npm run build
 ---
 
 ## Notes
-- Works on [TXST Catalog](https://reg-prod.ec.txstate.edu/StudentRegistrationSsb/ssb/courseSearch/courseSearch) pages only.  
+- Works on [ACC Catalog](https://www6.austincc.edu/schedule/) pages only.  
 - Make sure you refresh the catalog page after installing the extension.  
 - Data comes from Rate My Professor.
 
