@@ -34,7 +34,7 @@ npm install
 turbo build check-types
 ```
 4. Find the dist folder at `extensions/<browser>/dist/` and follow the guidance to load it as a local extension for your target browser:
-    *[Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
+    * [Chrome](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)
     * [Edge](https://learn.microsoft.com/en-us/microsoft-edge/extensions/getting-started/extension-sideloading)
     * [Firefox](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/)
 
