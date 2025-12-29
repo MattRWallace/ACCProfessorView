@@ -16,12 +16,42 @@ const ACC_CAMPUSES = [
   "Austin Community College - Cypress Creek"
 ]
 
+const ASU_PROFESSOR_NAME_REPLACEMENTS: { [key: string]: string} = {
+  "Esteban Hinojosa": "Estéban Hinojosa",
+}
+
+function applyNameReplacements(professorName: string): string {
+  // Direct replacement
+  if (ASU_PROFESSOR_NAME_REPLACEMENTS[professorName]) {
+    console.debug(`Name replacement: "${professorName}" → "${ASU_PROFESSOR_NAME_REPLACEMENTS[professorName]}"`);
+    return ASU_PROFESSOR_NAME_REPLACEMENTS[professorName];
+  }
+  
+  // Partial replacement (for first names)
+  let modifiedName = professorName;
+  for (const [original, replacement] of Object.entries(ASU_PROFESSOR_NAME_REPLACEMENTS)) {
+    if (professorName.includes(original)) {
+      modifiedName = professorName.replace(original, replacement);
+      console.debug(`Partial name replacement: "${professorName}" → "${modifiedName}"`);
+      break;
+    }
+  }
+  
+  return modifiedName;
+}
+
 async function searchACCCampuses(professorName: string) {
   const errors: string[] = [];
   
   // Try original name first
   const namesToTry = [professorName];
   const nameParts = professorName.split(' ');
+
+  // Add replacement name if it exists
+  const replacementName = applyNameReplacements(professorName);
+  if (replacementName !== professorName) {
+    namesToTry.push(replacementName);
+  }
   
   // Add variations: first name only, last name only
   if (nameParts.length >= 2) {

@@ -1,20 +1,16 @@
 {
-  "name": "acc_professor_view",
+  "name": "accprofessorview",
   "private": true,
-  "version": "0.1.0",
-  "type": "module",
   "scripts": {
-    "dev": "npx tsx src/rmp-api.ts",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "vite build",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/chrome": "^0.1.12",
-    "@types/node": "^24.5.2",
-    "typescript": "~5.8.3",
-    "vite": "^7.1.6"
+    "turbo": "latest"
   },
-  "dependencies": {
-    "rate-my-professor-api-ts": "^1.0.5"
-  }
+  "packageManager": "npm@8.5.0",
+  "workspaces" :[
+    "extensions/*",
+    "packages/*"
+  ]
 }

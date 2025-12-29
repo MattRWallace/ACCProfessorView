@@ -1,0 +1,46 @@
+{
+    "manifest_version": 3,
+    "name": "ACC ProfessorView",
+    "version": "2.0.0",
+    "description": "Rate My Professor Plugin for ACC Class Search. See professor ratings directly in ACC Class Search.",
+    "author": "matthew.r.wallace@live.com",
+    "homepage_url": "https://github.com/MattRWallace/ACCProfessorView",
+    "permissions": [
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "options_page": "options.html",
+    "host_permissions": [
+        "https://*.ratemyprofessors.com/*",
+        "https://www6.austincc.edu/schedule/*"
+    ],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www6.austincc.edu/schedule/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{ab6beae0-85a0-456f-8176-1c5493c861ac}",
+            "data_collection_permissions": {
+                "required": ["websiteContent"]
+            }
+        }
+    }
+}

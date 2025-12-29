@@ -203,7 +203,7 @@ function reorderName(name) {
 }
 
 function getName(p) {
-    let name  = null
+    let name  = '' 
     if (p && p.innerText) {
         text = p.innerText
     }
