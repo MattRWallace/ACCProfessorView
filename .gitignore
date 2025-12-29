@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Distribution files
+*.zip
+*.crx
+*.pem
