@@ -20,7 +20,7 @@ This extension enhances the Austin Community College class catalog by showing pr
 
 ### For Users (Browser Web Store)
 * [Chrome Web Store](https://chromewebstore.google.com/detail/acc-professorview/fceimaapanggcibfdacdnggaofoijfpk)
-* [Edge - IN REVIEW]()
+* [Edge](https://microsoftedge.microsoft.com/addons/detail/gcdhhbgobafkgnlcmfijbccnjpoiopej)
 * [Firefox - IN REVIEW]()
 
 ### For Developers/Contributors
