@@ -21,7 +21,7 @@ This extension enhances the Austin Community College class catalog by showing pr
 ### For Users (Browser Web Store)
 * [Chrome Web Store](https://chromewebstore.google.com/detail/acc-professorview/fceimaapanggcibfdacdnggaofoijfpk)
 * [Edge](https://microsoftedge.microsoft.com/addons/detail/gcdhhbgobafkgnlcmfijbccnjpoiopej)
-* [Firefox - IN REVIEW]()
+* [Firefox](https://addons.mozilla.org/en-US/firefox/addon/acc-professorview/)
 
 ### For Developers/Contributors
 1. **Clone the repository** or **Download the extension files** from this repository.
